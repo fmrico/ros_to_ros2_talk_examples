@@ -1,0 +1,4 @@
+string normal_sentence
+---
+string reserved_sentence
+int32 num_characters

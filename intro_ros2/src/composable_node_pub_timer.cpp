@@ -24,7 +24,7 @@ class MyNodePublisher : public rclcpp::Node
 public:
   MyNodePublisher(const std::string & name, const std::chrono::nanoseconds & rate)
   : Node(name),
-    counter(0)
+    counter_(0)
   {
     pub_ = create_publisher<std_msgs::msg::String>("chatter", 10);
     timer_ = create_wall_timer(
@@ -34,7 +34,7 @@ public:
   void timer_callback()
   {
     std_msgs::msg::String message;
-    message.data = "Hello, world! " + std::to_string(counter++) + " from " + get_name();
+    message.data = "Hello, world! " + std::to_string(counter_++) + " from " + get_name();
 
     RCLCPP_INFO(get_logger(), "Publishing [%s]", message.data.c_str());
 
@@ -44,7 +44,7 @@ public:
 private:
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
-  int counter;
+  int counter_;
 };
 
 int main(int argc, char * argv[])

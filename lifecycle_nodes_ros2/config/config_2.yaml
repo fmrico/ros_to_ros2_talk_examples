@@ -1,0 +1,12 @@
+file_param_node:
+  ros__parameters:
+    number: 3
+    message: "greetings"
+    person_name: "Marcos"
+    messages:
+      message_1: "ola"
+      message_2: "k ase"
+
+
+
+  

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>lifecycle_nodes_ros2</name>
+  <version>0.0.1</version>
+  
+  <description>Package with examples of parameters for ROS2 (rclcpp)</description>
+
+  <maintainer email="fmrico@gmail.com">Francisco Martin Rico</maintainer>
+ 
+  <license>Apache License, Version 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>std_msgs</depend>
+   
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,9 @@
+string sentence
+int32 times
+builtin_interfaces/Time interval
+---
+bool success
+builtin_interfaces/Time total_duration
+---
+int32 current_times
+builtin_interfaces/Time current_duration

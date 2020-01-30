@@ -28,8 +28,8 @@ int main(int argc, char * argv[])
   auto node = rclcpp::Node::make_shared("simple_param_node");
 
   node->declare_parameter("number", 1);
-  node->declare_parameter("message");
-  node->declare_parameter("person_name");
+  node->declare_parameter("message", "Ey");
+  node->declare_parameter("person_name", "Dude");
 
   int number = node->get_parameter("number").get_value<int>();
   std::string message = node->get_parameter("message").get_value<std::string>();

@@ -1,0 +1,3 @@
+ament_add_gtest(example_subscriber_test example_subscriber_test.cpp)
+ament_target_dependencies(example_subscriber_test ${dependencies})
+target_link_libraries(example_subscriber_test ${PROJECT_NAME})

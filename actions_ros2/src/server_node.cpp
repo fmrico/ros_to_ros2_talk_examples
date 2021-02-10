@@ -19,7 +19,7 @@
 #include "ros2talk_msgs/action/repeat_sentence.hpp"
 
 // Execute:
-//  ros2 run actions_ros2 server_node 
+//  ros2 run actions_ros2 server_node
 //  ros2 action list
 //  ros2 action info /repeat_sentence
 
@@ -48,7 +48,7 @@ public:
       std::bind(&RepeaterServer::handle_goal, this, _1, _2),
       std::bind(&RepeaterServer::handle_cancel, this, _1),
       std::bind(&RepeaterServer::handle_accepted, this, _1));
- 
+
     RCLCPP_INFO(get_logger(), "Ready.");
   }
 
@@ -64,7 +64,7 @@ private:
       current_goal_ = *goal;
       return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
     } else {
-      rclcpp_action::GoalResponse::REJECT;
+      return rclcpp_action::GoalResponse::REJECT;
     }
   }
 
@@ -74,7 +74,7 @@ private:
     RCLCPP_INFO(this->get_logger(), "Received request to cancel goal");
     return rclcpp_action::CancelResponse::ACCEPT;
   }
-  
+
   void execute(const std::shared_ptr<GoalHandleRepeatSentence> goal_handle)
   {
     rclcpp::Rate loop_rate(rclcpp::Time(current_goal_.interval).seconds());
@@ -84,18 +84,18 @@ private:
     auto start = now();
     int current_times = 0;
     while (rclcpp::ok() && current_times < current_goal_.times) {
-      
+
       if (goal_handle->is_canceling()) {
         result->total_duration = rclcpp::Time((now() - start).nanoseconds());
         result->success = false;
-        
+
         goal_handle->canceled(result);
-        
+
         RCLCPP_INFO(this->get_logger(), "Action Canceled");
-        
+
         return;
       }
-      
+
       RCLCPP_INFO(get_logger(), "%s", current_goal_.sentence.c_str());
 
       feedback->current_times = current_times++;
@@ -108,7 +108,7 @@ private:
     if (rclcpp::ok()) {
       result->success = true;
       result->total_duration = rclcpp::Time((now() - start).nanoseconds());
-      
+
       goal_handle->succeed(result);
 
       RCLCPP_INFO(this->get_logger(), "Action Succeeded");
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
   rclcpp::init(argc, argv);
 
   auto node = std::make_shared<RepeaterServer>();
-  
+
   node->start_server();
 
   rclcpp::spin(node);

@@ -13,15 +13,37 @@
 # limitations under the License.
 
 import rclpy
+
+from time import sleep
 from rclpy.node import Node 
+from std_msgs.msg import String
+
+class MyNodePublisher(Node):
+    def __init__(self):
+        super().__init__("composable_node_pub")
+        self.pub_ = self.create_publisher(String, 'chatter', 10)
+        self.counter = 0
+
+    def do_work(self):
+        msg = String()
+        msg.data = "Hello, world! " + str(self.counter)
+        self.counter += 1
+
+        self.get_logger().info('Publishing ["%s"]' % msg.data)
+
+        self.pub_.publish(msg)
+
 
 def main(args=None):
     rclpy.init(args=args)
-    
-    node = Node("simple_node")
-    
-    rclpy.spin(node)
 
+    node = MyNodePublisher()
+
+    loop_rate = 0.5
+    while rclpy.ok():
+        node.do_work()
+        sleep(loop_rate)
+    
     node.destroy_node()
     rclpy.shutdown()
 

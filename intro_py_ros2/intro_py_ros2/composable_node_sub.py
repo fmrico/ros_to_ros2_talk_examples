@@ -13,16 +13,37 @@
 # limitations under the License.
 
 import rclpy
+
+from time import sleep
 from rclpy.node import Node 
+from rclpy.executors import MultiThreadedExecutor
+from std_msgs.msg import String
+
+class MyNodeSubscriber(Node):
+    def __init__(self, name):
+        super().__init__(name)
+        self.sub_ = self.create_subscription(String, 'chatter', self.callback, 10)
+        self.sub_
+
+    def callback(self, msg):
+        self.get_logger().info("I heard " + msg.data + " in " + self.get_name())
+
 
 def main(args=None):
     rclpy.init(args=args)
-    
-    node = Node("simple_node")
-    
-    rclpy.spin(node)
 
-    node.destroy_node()
+    node_A = MyNodeSubscriber("node_sub_A")
+    node_B = MyNodeSubscriber("node_pub_B")
+
+    executor = MultiThreadedExecutor(2)
+
+    executor.add_node(node_A)
+    executor.add_node(node_B)
+
+    executor.spin()
+    
+    node_A.destroy_node()
+    node_B.destroy_node()
     rclpy.shutdown()
 
 if __name__ == "__main__":

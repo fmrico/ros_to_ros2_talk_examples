@@ -13,15 +13,28 @@
 # limitations under the License.
 
 import rclpy
+from time import sleep
 from rclpy.node import Node 
+from std_msgs.msg import String
+
+node = None
+
+def callback(msg):
+    global node
+    node.get_logger().info('I heard: ["%s"]' % msg.data)
 
 def main(args=None):
+    global node
     rclpy.init(args=args)
-    
-    node = Node("simple_node")
-    
-    rclpy.spin(node)
 
+    node = rclpy.create_node('simple_node_sub')
+
+    subscription = node.create_subscription(String, 'chatter', callback, 10)
+    subscription
+
+    while rclpy.ok():
+        rclpy.spin(node)
+    
     node.destroy_node()
     rclpy.shutdown()
 

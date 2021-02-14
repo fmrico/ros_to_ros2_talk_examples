@@ -13,15 +13,30 @@
 # limitations under the License.
 
 import rclpy
+from time import sleep
 from rclpy.node import Node 
+from std_msgs.msg import String
 
 def main(args=None):
     rclpy.init(args=args)
-    
-    node = Node("simple_node")
-    
-    rclpy.spin(node)
 
+    node = rclpy.create_node('simple_node_pub')
+    publisher = node.create_publisher(String, 'chatter', 10)
+
+    msg = String()
+    counter = 0
+
+    loop_rate = 0.5
+    while rclpy.ok():
+        msg.data = "Hello, world! " + str(counter)
+        counter += 1
+
+        node.get_logger().info('Publishing ["%s"]' % msg.data)
+
+        publisher.publish(msg)
+
+        sleep(0.5)
+    
     node.destroy_node()
     rclpy.shutdown()
 

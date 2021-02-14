@@ -28,7 +28,7 @@ def generate_launch_description():
     'RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED', '1')
 
   composable_node_pub_cmd = Node(
-    package='intro_ros2',
+    package='intro_cpp_ros2',
     node_executable='composable_node_pub_timer',
     # node_name='composable_node_pub',
     output='screen',
